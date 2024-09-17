@@ -1,0 +1,40 @@
+def coin_change_recursive(n, coins, memo):
+    """
+    使用递归和记忆化来计算凑出n分的不同方法数。
+    :param n: 目标金额（单位：分）
+    :param coins: 可用硬币的面额列表（单位：分）
+    :param memo: 用于记忆化的列表
+    :return: 不同方法的个数
+    """
+    # 如果金额为0，有一种方法（不使用任何硬币）
+    if n == 0:
+        return 1
+    # 如果金额小于0，无法凑出，返回0
+    if n < 0:
+        return 0
+    # 如果已经计算过这个金额，直接返回结果
+    if memo[n] != 0:
+        return memo[n]
+
+    count = 0
+    # 遍历每种硬币
+    for coin in coins:
+        count += coin_change_recursive(n - coin, coins, memo)
+
+    # 将计算结果存储在memo中
+    memo[n] = count
+    return count
+
+# 目标金额
+n = int(input("请输入目标金额(分)："))
+# 可用硬币的面额
+coins = [1, 2, 5]
+# 初始化记忆化列表，长度为n+1，所有元素初始化为0
+memo = [0] * (n + 1)
+# 调用递归函数
+result = coin_change_recursive(n, coins, memo)
+print("凑出",n,"分的方法数为：",result)
+
+
+时间复杂度：O（3n）
+空间复杂度：O（n)

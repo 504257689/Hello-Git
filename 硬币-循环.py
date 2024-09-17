@@ -1,0 +1,12 @@
+def count_ways(n, coins):
+    dp = [0] * (n + 1)
+    dp[0] = 1  # 凑出0分钱有一种方法，即什么都不选
+    for coin in coins:
+        for i in range(coin, n + 1):
+            dp[i] += dp[i - coin]
+    return dp[n]
+
+# 输入金额（单位：分）
+n = int(input("请输入金额（单位：分）: "))
+coins = [1, 2, 5]  # 硬币种类
+print(count_ways(n, coins))
